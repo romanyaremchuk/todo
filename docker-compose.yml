@@ -1,0 +1,42 @@
+services:
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "1234"
+      MYSQL_DATABASE: todo_app
+      MYSQL_USER: fastify_user # ✅ New user
+      MYSQL_PASSWORD: fastify_pass # ✅ Secure password for Fastify
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./fastify-todo
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: mysql
+      DB_USER: fastify_user # ✅ Use new user instead of root
+      DB_PASSWORD: fastify_pass
+      DB_NAME: todo_app
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  frontend:
+    build: ./todo-frontend
+    ports:
+      - "8080:80"
+    environment:
+      - VITE_API_URL=http://backend:3000 # ✅ Set API URL inside Docker
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/todo_app";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000"; // ✅ Updated
 
 export interface Task {
   id: number;
@@ -15,7 +15,7 @@ export const getTasks = async (): Promise<Task[]> => {
 };
 
 export const createTask = async (taskData: Omit<Task, "id">): Promise<Task> => {
-  const response = await axios.post(`${API_URL}/tasks/`, taskData);
+  const response = await axios.post(`${API_URL}/tasks`, taskData);
   return response.data;
 };
 
