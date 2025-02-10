@@ -6,7 +6,7 @@ export interface Task {
   id: number;
   title: string;
   description: string;
-  completed: string;
+  status: string;
 }
 
 export const getTasks = async (): Promise<Task[]> => {

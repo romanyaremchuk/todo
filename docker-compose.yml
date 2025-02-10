@@ -13,8 +13,8 @@ services:
       - mysql_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 5s
-      retries: 10
+      timeout: 4s
+      retries: 2
 
   backend:
     build: ./fastify-todo

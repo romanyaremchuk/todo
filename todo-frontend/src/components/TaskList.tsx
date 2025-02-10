@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { getTasks, Task } from "../api/todoApi";
 import TaskItem from "./TaskItem";
 
-const TaskList: React.FC = () => {
+interface TaskListProps {
+  refreshTrigger: boolean;
+}
+
+const TaskList: React.FC<TaskListProps> = ({ refreshTrigger }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
@@ -15,7 +19,7 @@ const TaskList: React.FC = () => {
         console.error("Error fetching tasks:", error);
         setTasks([]); // Prevent crashing on errors
       });
-  }, []);
+  }, [refreshTrigger]);
 
   return (
     <div>

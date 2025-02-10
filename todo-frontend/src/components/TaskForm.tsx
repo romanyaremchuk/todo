@@ -1,16 +1,26 @@
 import React, { useState } from "react";
-import { createTask } from "../api/todoApi";
+import { createTask, Task } from "../api/todoApi";
 
-const TaskForm: React.FC = () => {
+interface TaskFormProps {
+  onTaskAdded: () => void;
+}
+
+const TaskForm: React.FC<TaskFormProps> = ({ onTaskAdded }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const newTask: Omit<Task, "id"> = { title, description, status };
+
     try {
-      await createTask({ title, description, completed: "pending" });
+      await createTask(newTask);
+      onTaskAdded();
       setTitle("");
       setDescription("");
+      setStatus("pending");
     } catch (error) {
       console.error(error);
     }
