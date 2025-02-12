@@ -8,20 +8,12 @@ import fastifyStatic from "@fastify/static";
 import path from "path";
 import taskRoutes from "./routes/tasks";
 
-// Debugging: Log database connection details before initializing MySQL
-console.log("🔍 Debugging Database Connection:");
-console.log("DB_HOST:", process.env.DB_HOST);
-console.log("DB_USER:", process.env.DB_USER);
-console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
-console.log("DB_NAME:", process.env.DB_NAME);
-
 const server = Fastify({ logger: true });
 
 server.register(cors, {
   origin: "*",
 });
 
-// 🔄 Retry MySQL connection if it fails
 const connectWithRetry = async () => {
   let retries = 5;
   while (retries) {
@@ -33,10 +25,10 @@ const connectWithRetry = async () => {
         password: process.env.DB_PASSWORD || "1234",
         database: process.env.DB_NAME || "todo_app",
       });
-      console.log("✅ Connected to MySQL!");
+      console.log("Backend log: connected to db");
       break;
     } catch (err) {
-      console.error("❌ MySQL connection failed. Retrying in 5 seconds...");
+      console.error("Backend log: failed to connect to db. Retrying...");
       retries -= 1;
       await new Promise((res) => setTimeout(res, 5000)); // Wait 5s before retrying
     }
@@ -53,7 +45,7 @@ server.ready().then(async () => {
       status ENUM('pending', 'completed') DEFAULT 'pending'
     )
   `);
-  console.log("✅ Database schema checked: tasks table exists!");
+  console.log("Backend log: tasks table exists!");
 });
 
 server.register(taskRoutes);
@@ -75,7 +67,8 @@ server.setErrorHandler((error, request, reply) => {
 
 const start = async () => {
   try {
-    await connectWithRetry(); // ✅ Ensure MySQL is connected before starting server
+    // to make sure that mysql db is connected before the server started
+    await connectWithRetry();
     await server.listen({ port: 3000, host: "0.0.0.0" });
     console.log("🚀 Server running on http://localhost:3000");
   } catch (err) {

@@ -1,8 +1,9 @@
-import 'fastify';
-import { Pool } from 'mysql2/promise';
+import "fastify";
+import { Pool } from "mysql2/promise";
 
-declare module 'fastify' {
-    interface FastifyInstance {
-        mysql: Pool; // Add MySQL support
-    }
+// extending for mysql support
+declare module "fastify" {
+  interface FastifyInstance {
+    mysql: Pool;
+  }
 }

@@ -5,8 +5,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "1234"
       MYSQL_DATABASE: todo_app
-      MYSQL_USER: fastify_user # ✅ New user
-      MYSQL_PASSWORD: fastify_pass # ✅ Secure password for Fastify
+      MYSQL_USER: fastify_user
+      MYSQL_PASSWORD: fastify_pass
     ports:
       - "3306:3306"
     volumes:
@@ -22,7 +22,7 @@ services:
       - "3000:3000"
     environment:
       DB_HOST: mysql
-      DB_USER: fastify_user # ✅ Use new user instead of root
+      DB_USER: fastify_user
       DB_PASSWORD: fastify_pass
       DB_NAME: todo_app
     depends_on:
@@ -34,7 +34,7 @@ services:
     ports:
       - "8080:80"
     environment:
-      - VITE_API_URL=http://backend:3000 # ✅ Set API URL inside Docker
+      - VITE_API_URL=http://backend:3000
     depends_on:
       - backend
 

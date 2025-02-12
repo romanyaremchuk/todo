@@ -12,12 +12,11 @@ const TaskList: React.FC<TaskListProps> = ({ refreshTrigger }) => {
   useEffect(() => {
     getTasks()
       .then((fetchedTasks) => {
-        console.log("Fetched tasks:", fetchedTasks); // Debug API response
-        setTasks(Array.isArray(fetchedTasks) ? fetchedTasks : []); // Ensure it's an array
+        setTasks(Array.isArray(fetchedTasks) ? fetchedTasks : []);
       })
       .catch((error) => {
         console.error("Error fetching tasks:", error);
-        setTasks([]); // Prevent crashing on errors
+        setTasks([]); // prevents crashing on errors
       });
   }, [refreshTrigger]);
 
