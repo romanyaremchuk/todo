@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { createTask, Task, TaskStatus } from "../api/todoApi";
+import "./TaskForm.css";
 
 interface TaskFormProps {
   onTaskAdded: () => void;
@@ -28,26 +29,31 @@ const TaskForm: React.FC<TaskFormProps> = ({ onTaskAdded }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="Form" onSubmit={handleSubmit}>
       <input
+        className="Input"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Title"
         required
       />
+
       <input
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Description"
       />
       <select
+        className="Select"
         value={status}
         onChange={(e) => setStatus(e.target.value as TaskStatus)}
       >
         <option value="pending">Pending</option>
         <option value="completed">Completed</option>
       </select>
-      <button type="submit">Add Task</button>
+      <button className="Button" type="submit">
+        Add Task
+      </button>
     </form>
   );
 };
