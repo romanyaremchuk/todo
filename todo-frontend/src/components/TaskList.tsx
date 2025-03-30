@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getTasks, Task } from "../api/todoApi";
 import TaskItem from "./TaskItem";
+import "./TaskList.css";
 
 interface TaskListProps {
   refreshTrigger: boolean;
@@ -21,13 +22,11 @@ const TaskList: React.FC<TaskListProps> = ({ refreshTrigger }) => {
   }, [refreshTrigger]);
 
   return (
-    <div>
+    <div className="TaskList">
       <h2>Tasks</h2>
-      <ul>
-        {tasks.map((task) => (
-          <TaskItem key={task.id} task={task} />
-        ))}
-      </ul>
+      {tasks.map((task) => (
+        <TaskItem key={task.id} task={task} />
+      ))}
     </div>
   );
 };

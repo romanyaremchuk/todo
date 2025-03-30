@@ -1,5 +1,6 @@
 import React from "react";
 import { Task } from "../api/todoApi";
+import "./TaskItem.css";
 
 interface TaskItemProps {
   task: Task;
@@ -7,11 +8,17 @@ interface TaskItemProps {
 
 const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
   return (
-    <li>
-      <strong>{task.title}</strong> - {task.description} -{" "}
-      <span>{task.status}</span>
+    <div className="TaskItem">
+      <strong>{task.title}</strong>
+      <p className="Description">
+        <strong>Description: </strong> {task.description}
+      </p>
+      <span>
+        <strong>Status: </strong>
+        {task.status}
+      </span>
       {/* TODO add buttons edit delete etc here (hehe todo in todo app)*/}
-    </li>
+    </div>
   );
 };
 
