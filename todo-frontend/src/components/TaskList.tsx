@@ -23,7 +23,6 @@ const TaskList: React.FC<TaskListProps> = ({ refreshTrigger }) => {
 
   return (
     <div className="TaskList">
-      <h2>Tasks</h2>
       {tasks.map((task) => (
         <TaskItem key={task.id} task={task} />
       ))}
