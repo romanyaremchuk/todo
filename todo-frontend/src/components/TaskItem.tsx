@@ -11,12 +11,15 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
     <div className="TaskItem">
       <strong>{task.title}</strong>
       <p className="Description">
-        <strong>Description: </strong> {task.description}
+        <strong>Description: </strong>
+        {task.description.length > 30
+          ? task.description.slice(0, 30) + "..."
+          : task.description}
       </p>
-      <span>
+      <p>
         <strong>Status: </strong>
         {task.status}
-      </span>
+      </p>
       {/* TODO add buttons edit delete etc here (hehe todo in todo app)*/}
     </div>
   );

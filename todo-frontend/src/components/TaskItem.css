@@ -1,17 +1,20 @@
 ﻿.TaskItem {
   width: 100%;
   max-width: 400px;
+  min-width: 100px;
+
   height: auto;
-  min-height: 250px;
-  min-width: 400px;
+  max-height: 350px;
+  min-height: auto;
+
   padding: 5px;
   margin: 5px;
+
   border: 2px solid black;
-  max-height: 150px; /* optional */
-  overflow: scroll;
 
   .Description {
     white-space: collapse; /* allow wrapping */
     margin: 0;
+    overflow: hidden;
   }
 }

@@ -11,11 +11,9 @@ const AllTasks = () => {
 
   return (
     <div className="allTasks">
-      <div className="tasksWrapper">
-        <h1 className="header">All tasks</h1>
-        <TaskForm onTaskAdded={handleTaskAdded} />
-        <TaskList refreshTrigger={refreshTasks} />
-      </div>
+      <h1>All tasks</h1>
+      <TaskForm onTaskAdded={handleTaskAdded} />
+      <TaskList refreshTrigger={refreshTasks} />
     </div>
   );
 };
