@@ -5,15 +5,31 @@ import "./TaskList.css";
 
 interface TaskListProps {
   refreshTrigger: boolean;
+  filterByTaskType: string;
+  onRefreshTasks: () => void;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ refreshTrigger }) => {
+const TaskList: React.FC<TaskListProps> = ({
+  refreshTrigger,
+  filterByTaskType,
+  onRefreshTasks,
+}) => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
     getTasks()
       .then((fetchedTasks) => {
-        setTasks(Array.isArray(fetchedTasks) ? fetchedTasks : []);
+        setTasks(() => {
+          if (!Array.isArray(fetchedTasks)) {
+            return [];
+          }
+
+          if (filterByTaskType.length === 0) {
+            return fetchedTasks;
+          }
+
+          return fetchedTasks.filter((t) => t.status === filterByTaskType);
+        });
       })
       .catch((error) => {
         console.error("Error fetching tasks:", error);
@@ -24,7 +40,7 @@ const TaskList: React.FC<TaskListProps> = ({ refreshTrigger }) => {
   return (
     <div className="TaskList">
       {tasks.map((task) => (
-        <TaskItem key={task.id} task={task} />
+        <TaskItem key={task.id} task={task} refreshTasks={onRefreshTasks} />
       ))}
     </div>
   );

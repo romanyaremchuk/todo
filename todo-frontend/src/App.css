@@ -20,14 +20,21 @@
 .completedTasks,
 .uncompletedTasks {
   display: flex;
-  height: 90vh; /* or keep 90vh if you prefer */
-  align-items: center; /* <--- start at top instead of center */
-  justify-content: flex-start; /* or space-between, etc. */
+  height: 90vh;
+  align-items: center;
+  justify-content: flex-start;
   flex-direction: column;
   font-size: 1.5rem;
 }
 
 .nav-menu.active ~ .allTasks {
-  /* when nav is active, push the content right */
+  margin-left: 250px;
+}
+
+.nav-menu.active ~ .completedTasks {
+  margin-left: 250px;
+}
+
+.nav-menu.active ~ .uncompletedTasks {
   margin-left: 250px;
 }
